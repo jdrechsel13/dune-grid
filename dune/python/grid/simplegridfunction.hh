@@ -9,6 +9,7 @@
 #include <utility>
 
 #include <dune/common/typeutilities.hh>
+#include <dune/functions/gridfunctions/gridviewentityset.hh>
 
 #include <dune/python/pybind11/pybind11.h>
 
@@ -39,6 +40,9 @@ namespace Dune
 
       void bind ( const Element &element ) { element_ = element; }
       void unbind () { element_.reset(); }
+      bool bound() const { return element_.has_value(); }
+
+
 
       template< class X >
       auto operator() ( const X &x ) const
