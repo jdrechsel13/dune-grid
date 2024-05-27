@@ -148,6 +148,10 @@ namespace Dune
           return y;
         }, "element"_a, "x"_a );
       detail::registerGridFunction(scope,cls);
+      // The following code does not compile with AMDiS Python due to an ambiguous call to VirtualizedGF
+      // I could not find a fix for that, so we need to leave this uncommented by now
+      // This is probably caused by adding bound() to SimpleGridFunction, as this makes another Function() call enabled
+      /*
 #if HAVE_DUNE_VTK
       typedef typename GridFunctionTraits< GridFunction >::GridView GridView;
       using VirtualizedGF = Dune::Vtk::Function<GridView>;
@@ -160,7 +164,7 @@ namespace Dune
           return new VirtualizedGF( pyGridFunction(gf), "tmp" );
         } ) );
       pybind11::implicitly_convertible<GridFunction,VirtualizedGF>();
-#endif
+#endif*/
     }
 
     template <class GridView, int dimR>
